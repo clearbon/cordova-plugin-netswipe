@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="com.clearbon.cordova.netswipe" version="0.1.0">
+    <name>NetSwipe</name>
+    <description>NetSwipe payment card scanner API Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,netswipe,credit card,scanner</keywords>
+    <js-module src="www/NetSwipe.js" name="CardScanner">
+        <clobbers target="CardScanner" />
+    </js-module>
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="NetSwipePlugin" >
+                <param name="ios-package" value="NetSwipePlugin" />
+            </feature>
+        </config-file>
+        <header-file src="src/ios/NetSwipePlugin.h" />
+        <source-file src="src/ios/NetSwipePlugin.m" />
+    </platform>
+</plugin>
