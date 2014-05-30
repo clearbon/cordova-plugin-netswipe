@@ -110,17 +110,19 @@
     //NSMutableString *zipCode = [cardInformation valueForFieldID: @"idZipCode"];
     //NSLog(@"Additional field value: %@", zipCode);
     
-    NSString *message = [NSString stringWithFormat:@"Request reference: %@\nCard number: %@\nGrouped: %@\nExpiry date: %@\nExpiry date month: %@\nExpiry date year: %@\nCVV code: %@\nCard holder: %@\nSort code: %@\nAccount number: %@\nManually entered: %@",requestReference, cardNumber, cardNumberGrouped, expiryDate, expiryMonth, expiryYear, cvv, cardHolderName, sortCode, accountNumber, cardNumberManuallyEntered ? @"YES" : @"NO"];
-    NSLog(@"%@",message);
-    
     //Dismiss the SDK
     [self.viewController dismissViewControllerAnimated: YES completion: nil];
-    NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys: cardNumber, @"cardNumber", expiryMonth, @"expiryMonth", expiryYear, @"expiryYear", cvv, @"cvv", cardHolderName, @"cardHolderName", sortCode, @"sortCode", accountNumber, @"accountNumber", cardNumberManuallyEntered, @"cardNumberManuallyEntered", nil];
+    NSMutableDictionary *result = [NSMutableDictionary dictionaryWithObjectsAndKeys: cardNumber, @"cardNumber", expiryMonth, @"expiryMonth", expiryYear, @"expiryYear", cvv, @"cvv", cardHolderName, @"cardHolderName", sortCode, @"sortCode", accountNumber, @"accountNumber", cardNumberManuallyEntered, @"cardNumberManuallyEntered", nil];
 
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
 													   messageAsDictionary:result];
     
     [self writeJavascript:[pluginResult toSuccessCallbackString:self.callbackId]];
+
+    //Clearing the information
+    [cardInformation clear];
+    [result removeAllObjects];
+    
     self.hasPendingOperation = NO;
 }
 

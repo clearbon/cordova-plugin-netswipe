@@ -77,7 +77,7 @@ public class NetSwipePlugin extends CordovaPlugin {
             return;
         }
 
-        if (NetswipeSDK.isRooted()) {
+        if (!android.os.Build.MODEL.equals("sdk") && NetswipeSDK.isRooted()) {
             Log.d(LogTag, "NetSwipe SDK can't run on rooted device. Not initialized.");
             return;
         }
@@ -156,36 +156,39 @@ public class NetSwipePlugin extends CordovaPlugin {
             if (resultCode == Activity.RESULT_OK) { 
                 NetswipeCardInformation cardInformation = 
                         data.getParcelableExtra(NetswipeSDK.EXTRA_CARD_INFORMATION);
+                
                 //TODO card type
-                //CreditCardType creditCardType = cardInformation.getCardType(); 
-                String cardNumber = getStringValue(cardInformation.getCardNumber(), true); 
-                String expiryMonth = getStringValue(cardInformation.getExpiryDateMonth(), false); 
-                String expiryYear = getStringValue(cardInformation.getExpiryDateYear(), false);
-                String cvv = getStringValue(cardInformation.getCvvCode(), false);
-                String cardHolderName = getStringValue(cardInformation.getCardHolderName(), false); 
-                String sortCode = getStringValue(cardInformation.getSortCode(), false); 
-                String accountNumber = getStringValue(cardInformation.getAccountNumber(), false); 
-                boolean cardNumberManuallyEntered = cardInformation.isCardNumberManuallyEntered(); 
-                
-                cardInformation.clear();
-                
+                //CreditCardType creditCardType = cardInformation.getCardType();
+
+                JSONObject cardInfo = new JSONObject();
                 try {
-                    JSONObject cardInfo = new JSONObject();
-                    cardInfo.put("cardNumber", cardNumber);
-                    cardInfo.put("expiryMonth", expiryMonth);
-                    cardInfo.put("expiryYear", expiryYear);
-                    cardInfo.put("cvv", cvv);
-                    cardInfo.put("cardHolderName", cardHolderName);
-                    cardInfo.put("sortCode", sortCode);
-                    cardInfo.put("accountNumber", accountNumber);
-                    cardInfo.put("cardNumberManuallyEntered", cardNumberManuallyEntered);
+                    cardInfo.put("cardNumber", getStringValue(cardInformation.getCardNumber(), true));
+                    cardInfo.put("expiryMonth", getStringValue(cardInformation.getExpiryDateMonth(), false));
+                    cardInfo.put("expiryYear", getStringValue(cardInformation.getExpiryDateYear(), false));
+                    cardInfo.put("cvv", getStringValue(cardInformation.getCvvCode(), false));
+                    cardInfo.put("cardHolderName", getStringValue(cardInformation.getCardHolderName(), false));
+                    cardInfo.put("sortCode", getStringValue(cardInformation.getSortCode(), false));
+                    cardInfo.put("accountNumber", getStringValue(cardInformation.getAccountNumber(), false));
+                    cardInfo.put("cardNumberManuallyEntered", cardInformation.isCardNumberManuallyEntered());
             
                     //TODO custom fields
                     //String zipCode = cardInformation.getCustomField("zip_code");
                     
                     callbackContext.success(cardInfo);
+                    
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.e(LogTag, "Error creating return parameters for success callback.", e);
+                } finally {
+                    cardInformation.clear();
+                    cardInfo.remove("cardNumber");
+                    cardInfo.remove("expiryMonth");
+                    cardInfo.remove("expiryYear");
+                    cardInfo.remove("cvv");
+                    cardInfo.remove("cardHolderName");
+                    cardInfo.remove("sortCode");
+                    cardInfo.remove("accountNumber");
+                    cardInfo.remove("cardNumberManuallyEntered");
+                    cardInfo = null;
                 }
             } else if (resultCode == Activity.RESULT_CANCELED) { 
                 try {
@@ -198,7 +201,7 @@ public class NetSwipePlugin extends CordovaPlugin {
                     
                     callbackContext.error(cardInfo);
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.e(LogTag, "Error creating return parameters for error callback.", e);
                 }
             }  
         } 
