@@ -2,7 +2,7 @@
 //  NetSwipePlugin.c
 //
 //  Created by Adalbert Wysocki on 5/23/14.
-//  Copyright Clearbon, Inc.
+//  Copyright 2014 Clearbon, Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
