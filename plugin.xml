@@ -8,6 +8,7 @@
     <js-module src="www/NetSwipe.js" name="CardScanner">
         <clobbers target="CardScanner" />
     </js-module>
+    <!-- ios -->
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
             <feature name="NetSwipePlugin" >
@@ -16,5 +17,26 @@
         </config-file>
         <header-file src="src/ios/NetSwipePlugin.h" />
         <source-file src="src/ios/NetSwipePlugin.m" />
+    </platform>
+    <!-- android -->
+    <platform name="android">
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/> 
+            <uses-permission android:name="android.permission.INTERNET"/> 
+            <uses-permission android:name="android.permission.CAMERA"/> 
+            <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" /> 
+            <activity android:theme="@style/Theme.JumioNetswipeSDK" 
+                android:name="com.jumio.netswipe.sdk.core.ScanCardActivity" 
+                android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
+            <!-- optional -->
+            <uses-permission android:name="android.permission.VIBRATE"/> 
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> 
+            <uses-feature android:name="android.hardware.camera" android:required="true" />
+        </config-file>
+        <proguard-config>
+-keep class com.jumio.** { *; }
+-keep class netswipe.** { *; }
+        </proguard-config>
+        <source-file src="src/android/NetSwipePlugin.java" target-dir="src/com/clearbon/cordova/netswipe" />
     </platform>
 </plugin>

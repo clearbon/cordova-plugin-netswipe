@@ -1,12 +1,15 @@
 cordova-plugin-netswipe
 =======================
 
-Plugin to integrate NetSwipe SDK from Jumio into Cordova/PhoneGap based applications
+Plugin to integrate NetSwipe SDK from Jumio into Cordova/PhoneGap based applications.
+
+Note that this plugin is not from Jumio.
 
 #Introduction
 
-NetSwipe Cordova plugin allows to integrate the NetSwipe SDK from Jumio into your applications.
-NetSwipe enables apps to scan the payments cards (debit/credit) in order to accept payments in your apps. NetSwipe is much more reliable in recognizing card information than similar card.io SDK. It also includes recognition of expiration date, card holder name on card, includes a manual capture with customizable fields and provides server storage of all swipes for transaction verifications/tracking.
+NetSwipe Cordova plugin allows intergrating the NetSwipe SDK from Jumio into your mobile applications.
+
+NetSwipe truns your mobile phone into a payment card scanner that accepts and validates cards. NetSwipe is more accurate in recognizing card information than similar card.io SDK. It also includes recognition of expiration date, card holder name on card, includes a manual capture with customizable fields.
 
 NetSwipe is a commerical product and a proper commercial license is required for this plugin to work. 
 
@@ -19,18 +22,37 @@ The following is required for this plugin to work:
 * Cordova v3.0.0+
 * NetSwipe SDK for iOS v2.0.0+ & iOS 6.0+ (for iOS integration only) 
 * NetSwipe SDK for Android v2.0.0+ & Android 4.0+ (API level 14) (for Android integration only)
+* Product license and API access codes obtained from Jumio
 
 #Supported Platforms
 
 * iOS
-* Android (coming soon)
+* Android
 
 #Installation 
-
-After installing the NetSwipe SDK following the documentation, install the plugin:
+Install the plugin:
 
 	cordova plugin add com.clearbon.cordova.netswipe
 
+Then follow NetSwipe SDK implementation guides for each platform to install the SDK.
+
+## Additional steps
+### iOS
+
+Based on NetSwipe iOS implementation guide:
+
+* Link the required farmeworks
+* Add the required linking flags
+* Validate the architectures
+* Create a group in _Frameworks_ for NetSwipe libs by dragging&droping the _NetswipeMobileSDK_ dir to _Frameworks_ group in your project (link & create groups)
+ 
+### Android
+
+Based on NetSwipe Android implementation guide:
+
+* Add proguard entries
+* copy the jar from the _NetSwipeSDK/libs_ dir to your project _libs_ dir
+* copy all resources from _NetSwipeSDK/res_ dir to your project _res_ dir  
 
 #Usage
 
