@@ -29,7 +29,7 @@ The following is required for this plugin to work:
 
 After installing the NetSwipe SDK following the documentation, install the plugin:
 
-	cordova plugin add org.apache.cordov.file
+	cordova plugin add com.clearbon.cordova.netswipe
 
 
 #Usage
