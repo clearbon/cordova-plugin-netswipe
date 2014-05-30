@@ -80,6 +80,8 @@ sortCodeAndAccountNumberRequired | 1 / 0 (default) | enables the identification 
 
 * _successCallback(cardInfo)_: function called after a successful scan
 
+**Important: do not forget to reset the variables values once you used them.**
+
 Name | Type | Description
 ---- | ------ | -----------
 cardNumber | String | card number
